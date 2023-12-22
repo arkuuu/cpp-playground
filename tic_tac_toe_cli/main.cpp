@@ -1,4 +1,5 @@
 #include <iostream>
+#include <array>
 
 char get_symbol_for_number(int player)
 {
@@ -15,9 +16,9 @@ char get_symbol_for_number(int player)
     return '_';
 }
 
-void print_board(int board[9])
+void print_board(std::array<int, 9> &board)
 {
-    for (int i = 0; i < 9; i += 3)
+    for (int i = 0; i < board.size(); i += 3)
     {
         std::cout << i << ": " << get_symbol_for_number(board[i]) << " ";
         std::cout << i + 1 << ": " << get_symbol_for_number(board[i + 1]) << " ";
@@ -27,9 +28,9 @@ void print_board(int board[9])
     std::cout << std::endl;
 }
 
-bool is_winner(int board[9], int player)
+bool is_winner(std::array<int, 9> &board, int player)
 {
-    int winning_combinations[8][3] = {
+    std::array<std::array<int, 3>, 8> winning_combinations{{
         {0, 1, 2},
         {3, 4, 5},
         {6, 7, 8},
@@ -38,15 +39,14 @@ bool is_winner(int board[9], int player)
         {2, 5, 8},
         {0, 4, 8},
         {2, 4, 6},
-    };
+    }};
 
-    for (int i = 0; i < 8; i++)
+    for (const auto &combination : winning_combinations)
     {
-        int field_1 = winning_combinations[i][0];
-        int field_2 = winning_combinations[i][1];
-        int field_3 = winning_combinations[i][2];
-
-        if (board[field_1] == player && board[field_2] == player && board[field_3] == player)
+        int field_1 = board[combination[0]];
+        int field_2 = board[combination[1]];
+        int field_3 = board[combination[2]];
+        if (field_1 == player && field_2 == player && field_3 == player)
         {
             return true;
         }
@@ -55,11 +55,11 @@ bool is_winner(int board[9], int player)
     return false;
 }
 
-bool has_empty_field(int board[9])
+bool has_empty_field(std::array<int, 9> &board)
 {
-    for (int i = 0; i < 9; i++)
+    for (const auto &field : board)
     {
-        if (board[i] == 0)
+        if (field == 0)
         {
             return true;
         }
@@ -68,7 +68,7 @@ bool has_empty_field(int board[9])
     return false;
 }
 
-void await_player_input(int board[9], int player)
+void await_player_input(std::array<int, 9> &board, int player)
 {
     int input;
     std::cout << "Player " << get_symbol_for_number(player) << ", ";
@@ -87,8 +87,7 @@ int main()
     // 0 = empty
     // 1 = X
     // 2 = O
-    int game_board[9] = {0};
-    int input;
+    std::array<int, 9> game_board{0};
 
     print_board(game_board);
 
