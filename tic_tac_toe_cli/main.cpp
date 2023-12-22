@@ -30,7 +30,7 @@ void print_board(std::array<int, 9> &board)
 
 bool is_winner(std::array<int, 9> &board, int player)
 {
-    std::array<std::array<int, 3>, 8> winning_combinations{{
+    const std::array<std::array<int, 3>, 8> winning_combinations{{
         {0, 1, 2},
         {3, 4, 5},
         {6, 7, 8},
@@ -43,9 +43,9 @@ bool is_winner(std::array<int, 9> &board, int player)
 
     for (const auto &combination : winning_combinations)
     {
-        int field_1 = board[combination[0]];
-        int field_2 = board[combination[1]];
-        int field_3 = board[combination[2]];
+        const int field_1 = board[combination[0]];
+        const int field_2 = board[combination[1]];
+        const int field_3 = board[combination[2]];
         if (field_1 == player && field_2 == player && field_3 == player)
         {
             return true;
