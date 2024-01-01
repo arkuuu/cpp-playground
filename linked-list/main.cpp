@@ -79,7 +79,7 @@ int main()
     list.remove(5);
     list.print();
 
-    // Remove node and end of list
+    // Remove node at end of list
     list.remove(10);
     list.print();
 
