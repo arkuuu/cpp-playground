@@ -7,5 +7,5 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
 add_executable(SimpleCMakeExample
     src/main.cpp
-    src/SomeClass.cpp
+    src/some_class.cpp
 )

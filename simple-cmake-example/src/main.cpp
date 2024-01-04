@@ -1,5 +1,5 @@
-#include "SomeClass.h"
 #include <iostream>
+#include "some_class.h"
 
 int main()
 {
