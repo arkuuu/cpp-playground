@@ -1,6 +1,6 @@
 # ENC Chart Reader
 
-I try to read the contents of a S-57 enc chart from scratch.
+I try to read the contents of an S-57 enc chart from scratch.
 I use the first file of the free _Elbe-Luebeck-Kanal_ ENC chart for testing.
 It can be downloaded [here](https://www.elwis.de/DE/dynamisch/IENC/).
 

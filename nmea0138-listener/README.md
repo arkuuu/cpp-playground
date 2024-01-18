@@ -7,7 +7,7 @@ The program creates a UDP connection to an NMEA0138 multiplexer, which sends out
 To simulate this multiplexer while not on board, I use [transmitterdan/VDRplayer](https://github.com/transmitterdan/VDRplayer).
 The intention is to read and decode the data to show the actual navigation data like position, course, depth etc.
 
-It is still a work in progress. As of know, it only shows the received NMEA sentences without proper parsing. I know there are a lot of fully grown NMEA0138 libraries out there. But I want to do this on my own to learn.
+It is still a work in progress. As of now, it only shows the received NMEA sentences without proper parsing. I know there are a lot of fully grown NMEA0138 libraries out there. But I want to do this on my own to learn.
 
 ## Example output
 
