@@ -3,8 +3,6 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 
-#define BUFFER_SIZE 200
-
 Connection::~Connection()
 {
     if (isConnected())
@@ -50,7 +48,6 @@ int Connection::receive(std::string &message)
 
     int bytesReceived;
     socklen_t sizeofSocketAddress = sizeof(sockaddr_storage);
-    char buffer[BUFFER_SIZE] = {0};
 
     // TODO Maybe use recvmsg, recv instead, what's the difference?
     bytesReceived = recvfrom(

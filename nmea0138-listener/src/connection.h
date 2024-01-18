@@ -4,6 +4,8 @@
 #include <string>
 #include <netinet/in.h>
 
+#define BUFFER_SIZE 200
+
 class Connection
 {
 public:
@@ -15,6 +17,7 @@ public:
 private:
     int socketfd = 0;
     sockaddr_in socketAddress;
+    char buffer[BUFFER_SIZE] = {0};
 };
 
 #endif // CONNECTION_H_
