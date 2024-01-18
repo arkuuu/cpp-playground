@@ -117,7 +117,7 @@ std::vector<DirectoryEntry> readDirectory(std::ifstream &file, const Leader &lea
 FieldControlField readFieldControlField(
     std::ifstream &file,
     const Leader &leader,
-    std::vector<DirectoryEntry> &directory)
+    const std::vector<DirectoryEntry> &directory)
 {
     DirectoryEntry firstEntry = directory[0];
     FieldControlField fieldControlField;
@@ -131,7 +131,7 @@ FieldControlField readFieldControlField(
 std::vector<DataDescriptiveField> readDataDescriptiveFields(
     std::ifstream &file,
     const Leader &leader,
-    std::vector<DirectoryEntry> &directory)
+    const std::vector<DirectoryEntry> &directory)
 {
     std::vector<DataDescriptiveField> fields;
     for (const auto &directoryEntry : directory)
@@ -156,7 +156,7 @@ std::vector<DataDescriptiveField> readDataDescriptiveFields(
 std::vector<DataField> readDataFields(
     std::ifstream &file,
     const Leader &leader,
-    std::vector<DirectoryEntry> &directory)
+    const std::vector<DirectoryEntry> &directory)
 {
     std::vector<DataField> fields;
     for (const auto &directoryEntry : directory)
