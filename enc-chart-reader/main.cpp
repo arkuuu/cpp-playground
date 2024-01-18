@@ -2,6 +2,8 @@
 #include <fstream>
 #include <vector>
 
+#define LEADER_BYTES_LENGTH 24
+
 struct Leader
 {
     int recordLength;
@@ -94,7 +96,7 @@ Leader readLeader(std::ifstream &file)
 std::vector<DirectoryEntry> readDirectory(std::ifstream &file, const Leader &leader)
 {
     int currentAddress = file.tellg();
-    int sizeOfDirectory = leader.baseAddressOfFieldArea - currentAddress - 1;
+    int sizeOfDirectory = leader.baseAddressOfFieldArea - LEADER_BYTES_LENGTH - 1;
     int entrySize = leader.sizeOfFieldTagField + leader.sizeOfFieldLengthField + leader.sizeOfFieldPositionField;
     int numberOfEntries = sizeOfDirectory / entrySize;
 
@@ -191,7 +193,7 @@ int main()
     // TODO dr's
     DataRecord dr;
     dr.leader = readLeader(encFile);
-    // TODO baseAddress is only relative to datarecord, not to file, so directory reading fails now
+    // TODO I guess reading fails now because I sometimes seek the file position
     // dr.directory = readDirectory(encFile, dr.leader);
     // dr.fieldArea = readDataFields(encFile, dr.leader, dr.directory);
 
