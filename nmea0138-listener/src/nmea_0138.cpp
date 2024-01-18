@@ -2,7 +2,7 @@
 
 #include <sstream>
 
-bool Nmea0138Parser::isValid(const std::string message)
+bool Nmea0138Parser::isValid(const std::string &message)
 {
     // Must start with $ or !
     if (message[0] != '$' && message[0] != '!')
@@ -20,7 +20,7 @@ bool Nmea0138Parser::isValid(const std::string message)
     return true;
 }
 
-Nmea0138Sentence Nmea0138Parser::parse(const std::string message)
+Nmea0138Sentence Nmea0138Parser::parse(const std::string &message)
 {
     Nmea0138Sentence sentence;
     sentence.talkerId = message.substr(1, 2);

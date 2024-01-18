@@ -15,8 +15,8 @@ struct Nmea0138Sentence
 class Nmea0138Parser
 {
 public:
-    bool isValid(const std::string message);
-    Nmea0138Sentence parse(const std::string message);
+    bool isValid(const std::string &message);
+    Nmea0138Sentence parse(const std::string &message);
 };
 
 #endif // NMEA_0138_H_
