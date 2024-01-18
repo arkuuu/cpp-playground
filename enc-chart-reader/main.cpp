@@ -65,13 +65,6 @@ std::string readStringFromFile(std::ifstream &file, const int length)
     return content;
 }
 
-std::string readStringFromFile(std::ifstream &file, const int startAdress, const int length)
-{
-    file.seekg(startAdress);
-
-    return readStringFromFile(file, length);
-}
-
 Leader readLeader(std::ifstream &file)
 {
     Leader leader;
@@ -95,7 +88,6 @@ Leader readLeader(std::ifstream &file)
 
 std::vector<DirectoryEntry> readDirectory(std::ifstream &file, const Leader &leader)
 {
-    int currentAddress = file.tellg();
     int sizeOfDirectory = leader.baseAddressOfFieldArea - LEADER_BYTES_LENGTH - 1;
     int entrySize = leader.sizeOfFieldTagField + leader.sizeOfFieldLengthField + leader.sizeOfFieldPositionField;
     int numberOfEntries = sizeOfDirectory / entrySize;
@@ -111,6 +103,8 @@ std::vector<DirectoryEntry> readDirectory(std::ifstream &file, const Leader &lea
         directory.push_back(field);
     }
 
+    file.ignore(1); // The directory ends with the field terminator
+
     return directory;
 }
 
@@ -123,7 +117,6 @@ FieldControlField readFieldControlField(
     FieldControlField fieldControlField;
     fieldControlField.content = readStringFromFile(
         file,
-        leader.baseAddressOfFieldArea + firstEntry.position,
         firstEntry.length);
     return fieldControlField;
 }
@@ -145,7 +138,6 @@ std::vector<DataDescriptiveField> readDataDescriptiveFields(
         DataDescriptiveField field;
         field.content = readStringFromFile(
             file,
-            leader.baseAddressOfFieldArea + directoryEntry.position,
             directoryEntry.length);
         fields.push_back(field);
     }
@@ -164,7 +156,6 @@ std::vector<DataField> readDataFields(
         DataField field;
         field.content = readStringFromFile(
             file,
-            leader.baseAddressOfFieldArea + directoryEntry.position,
             directoryEntry.length);
         fields.push_back(field);
     }
@@ -190,12 +181,14 @@ int main()
     ddr.fieldArea = readDataDescriptiveFields(encFile, ddr.leader, ddr.directory);
     encData.ddr = ddr;
 
-    // TODO dr's
-    DataRecord dr;
-    dr.leader = readLeader(encFile);
-    // TODO I guess reading fails now because I sometimes seek the file position
-    // dr.directory = readDirectory(encFile, dr.leader);
-    // dr.fieldArea = readDataFields(encFile, dr.leader, dr.directory);
+    while (!encFile.eof()) // TODO this stops too late
+    {
+        DataRecord dr;
+        dr.leader = readLeader(encFile);
+        dr.directory = readDirectory(encFile, dr.leader);
+        dr.fieldArea = readDataFields(encFile, dr.leader, dr.directory);
+        encData.drList.push_back(dr);
+    }
 
     std::cout << " -- Read bytes: " << encFile.tellg() << std::endl;
     std::cout << std::endl;
