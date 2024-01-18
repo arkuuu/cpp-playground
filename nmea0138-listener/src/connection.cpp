@@ -13,7 +13,7 @@ Connection::~Connection()
     }
 }
 
-void Connection::connect(std::string ipAdress, int port)
+void Connection::connect(const std::string ipAdress, const int port)
 {
     socketfd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     if (socketfd < 0)
